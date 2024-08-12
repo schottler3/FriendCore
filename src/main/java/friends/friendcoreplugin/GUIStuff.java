@@ -22,7 +22,7 @@ public class GUIStuff implements Listener {
 
     public GUIStuff(){
         Bukkit.getPluginManager().registerEvents(this, FriendCorePlugin.getInstance());
-    };
+    }
 
     public static ItemStack[] populateGUI(int size){
         ItemStack[] testBlocks = new ItemStack[size];
@@ -51,7 +51,7 @@ public class GUIStuff implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event){
         Player player = (Player)event.getWhoClicked();
-        if(Objects.equals(event.getClickedInventory(), NPCInteract.getRailShop())) {
+        if(event.getInventory().equals(RailWorker.getShop()) ) {
             if (event.getClick().equals(ClickType.LEFT)) {
                 Inventory inventory = event.getClickedInventory();
                 assert inventory != null;
@@ -59,6 +59,7 @@ public class GUIStuff implements Listener {
 
                 if(item != null) {
                     ItemMeta meta = item.getItemMeta();
+                    if(meta == null) return;
                     PersistentDataContainer data = meta.getPersistentDataContainer();
                     PersistentDataContainer playerData = player.getPersistentDataContainer();
 
@@ -93,6 +94,7 @@ public class GUIStuff implements Listener {
 
                 if (item != null) {
                     ItemMeta meta = item.getItemMeta();
+                    if(meta == null) return;
                     PersistentDataContainer data = meta.getPersistentDataContainer();
                     PersistentDataContainer playerData = player.getPersistentDataContainer();
 

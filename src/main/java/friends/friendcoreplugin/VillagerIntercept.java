@@ -10,21 +10,18 @@ public class VillagerIntercept implements Listener {
 
     public VillagerIntercept(){
         Bukkit.getPluginManager().registerEvents(this, FriendCorePlugin.getInstance());
-    };
-
-    @EventHandler
-    public void onCure(EntityTransformEvent event) {
-        if (event.getTransformReason().equals(EntityTransformEvent.TransformReason.CURED)) {
-            System.out.println("Worked!");
-            double rand = Math.random();
-            Villager villy = (Villager) event.getTransformedEntities().get(0);
-            villy.setAdult();
-            villy.setProfession(Villager.Profession.TOOLSMITH);
-            villy.setCustomName("Rail Worker");
-            villy.setCustomNameVisible(true);
-        }
     }
 
+    @EventHandler
+    public void onTransform(EntityTransformEvent event) {
+        if (event.getTransformReason().equals(EntityTransformEvent.TransformReason.CURED)) {
+            Villager villy = (Villager) event.getTransformedEntity();
+            double rand = Math.random();
+            if(rand < .1) {
+                RailWorkerManager.createRailWorker(villy.getLocation(), FriendCorePlugin.getInstance());
+                villy.remove();
+            }
+        }
+    }
 }
-
 

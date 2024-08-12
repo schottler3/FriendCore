@@ -6,7 +6,6 @@ import friends.friendcoreplugin.commands.RemoveCommand;
 import friends.friendcoreplugin.commands.Vote;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -18,7 +17,6 @@ public final class FriendCorePlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         // Plugin startup logic
-        System.out.println("FriendCore enabled");
         new AddCommand();
         new VillagerIntercept();
         new RemoveCommand();
@@ -30,13 +28,15 @@ public final class FriendCorePlugin extends JavaPlugin {
         new VoteStuff();
         new Elevator();
         new CommandList();
+
+        sudoBroadcast("FriendCorePlugin enabled");
         
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        System.out.println("FriendCore disabled");
+        sudoBroadcast("FriendCorePlugin disabled");
     }
 
     public static FriendCorePlugin getInstance() {
@@ -60,10 +60,15 @@ public final class FriendCorePlugin extends JavaPlugin {
         }.runTaskTimer(FriendCorePlugin.getInstance(), 0L, 20L);
     }
 
-    public void sudoBroadcast(String message){
+    public static void sudoBroadcast(String message){
         for (Player player : Bukkit.getOnlinePlayers()) {
             Msg.send(player, message);
         }
+    }
+
+    public static void throwError(String message){
+        FriendCorePlugin.getInstance().getLogger().severe("Error: " + message);
+        sudoBroadcast(message);
     }
 
 }
