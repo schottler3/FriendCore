@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -28,11 +29,11 @@ public class ExplosivePick extends ItemStack implements Listener {
 
     @EventHandler
     public void onAnvil(PrepareAnvilEvent event) {
-        AnvilInventory anvil = (AnvilInventory) event.getInventory();
+        AnvilInventory anvil = event.getInventory();
         ItemStack item = anvil.getItem(0);
         ItemStack secondItem = anvil.getItem(1);
 
-        if (item == null || secondItem == null || !ItemUtils.isPickaxe(item) || !secondItem.isSimilar(new ItemStack(Material.TNT))) {
+        if (secondItem == null || !ItemUtils.isPickaxe(item) || !secondItem.isSimilar(new ItemStack(Material.TNT))) {
             return;
         }
 
@@ -50,11 +51,11 @@ public class ExplosivePick extends ItemStack implements Listener {
 
         int amount = secondItem.getAmount();
         if (amount > 1) {
-            Player player = (Player) event.getViewers().get(0);
+            Player player = (Player) event.getViewers().getFirst();
             ItemStack inHand = secondItem.clone();
             inHand.setAmount(amount - 1);
             secondItem.setAmount(1);
-            player.getInventory().addItem(inHand);
+            player.getWorld().dropItemNaturally(player.getLocation(), inHand);
         }
     }
 
@@ -111,23 +112,64 @@ public class ExplosivePick extends ItemStack implements Listener {
         return null;
     }
 
+    public void killPick(List<String> lore, Player player) {
+        Msg.send(player, ChatColor.DARK_PURPLE + "The power on that tool has run out!");
+        lore.clear();
+        doExplosion(player);
+    }
+
+    private void doExplosion(Player player) {
+        Particle particle = Particle.EXPLOSION;
+        int count = 5;
+        double offsetX = 0.0;
+        double offsetY = 2;
+        double offsetZ = 0.0;
+        double speed = 5;
+        Location local = player.getLocation();
+
+        player.getWorld().spawnParticle(particle, local, count, offsetX, offsetY, offsetZ, speed);
+
+        player.playEffect(EntityEffect.HURT_EXPLOSION);
+        player.playEffect(local, Effect.EXTINGUISH, null);
+        player.damage(4);
+    }
+
     public void damagePick(ItemStack pick, Player player){
         ItemMeta meta = pick.getItemMeta();
         if(meta == null)
             return;
         PersistentDataContainer data = meta.getPersistentDataContainer();
         if(data.get(key,PersistentDataType.INTEGER) != null){
+
             int dura = data.get(key,PersistentDataType.INTEGER);
-            if(dura <= 0) {
-                Msg.send(player, "The power on that tool has run out!");
-                return;
-            }
             dura--;
             data.set(key, PersistentDataType.INTEGER, dura);
 
             List<String> lore = meta.getLore();
+            if(lore == null)
+                return;
             if(lore.isEmpty())
                 return;
+
+            Damageable damageablePick = (Damageable) meta;
+            int toDeal = 100 - dura;
+            if(meta.hasEnchants()){
+                if(meta.getEnchants().containsKey(Enchantment.UNBREAKING)){
+                    double level = meta.getEnchants().get(Enchantment.UNBREAKING);
+                    double baseToDeal = 1 /(level+1);
+                    int finalToDeal = (int)(toDeal*baseToDeal);
+                    Msg.send(player, String.valueOf(finalToDeal));
+                    damageablePick.setDamage(damageablePick.getDamage() + finalToDeal);
+                }
+                else {
+                    Msg.send(player, String.valueOf(toDeal));
+                    damageablePick.setDamage(damageablePick.getDamage() + toDeal);
+                }
+            }
+            if(toDeal + damageablePick.getDamage() >= pick.getType().getMaxDurability()) {
+                killPick(lore, player);
+                return;
+            }
 
             if(dura > 87){
                 lore.set(1, ChatColor.DARK_RED + "█"
@@ -192,7 +234,7 @@ public class ExplosivePick extends ItemStack implements Listener {
                         + ChatColor.WHITE + "█"
                         + ChatColor.WHITE + "█");
             }
-            else{
+            else if(dura > 0){
                 lore.set(1, ChatColor.WHITE + "█"
                         + ChatColor.WHITE + "█"
                         + ChatColor.WHITE + "█"
@@ -201,7 +243,9 @@ public class ExplosivePick extends ItemStack implements Listener {
                         + ChatColor.WHITE + "█"
                         + ChatColor.WHITE + "█");
             }
-
+            else{
+                killPick(lore, player);
+            }
             meta.setLore(lore);
             pick.setItemMeta(meta);
         }
