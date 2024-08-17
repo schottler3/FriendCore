@@ -28,7 +28,8 @@ public final class FriendCorePlugin extends JavaPlugin {
         new VoteStuff();
         new Elevator();
         new CommandList();
-        new ExplosivePick();
+        new AnvilIntercept();
+        new BlockBreak();
 
         sudoBroadcast("FriendCorePlugin enabled");
         
