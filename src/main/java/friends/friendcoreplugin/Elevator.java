@@ -1,5 +1,6 @@
 package friends.friendcoreplugin;
 
+import friends.friendcoreplugin.utils.Msg;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,7 +16,7 @@ public class Elevator implements Listener {
 
     public Elevator(){
         Bukkit.getPluginManager().registerEvents(this, FriendCorePlugin.getInstance());
-    };
+    }
 
     @EventHandler
     public void onPlayerSneak(PlayerToggleSneakEvent event){

@@ -1,5 +1,7 @@
 package friends.friendcoreplugin;
 
+import friends.friendcoreplugin.speedcart.GUIStuff;
+import friends.friendcoreplugin.utils.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.NamespacedKey;

@@ -1,6 +1,6 @@
 package friends.friendcoreplugin.commands;
 
-import friends.friendcoreplugin.CommandBase;
+import friends.friendcoreplugin.utils.CommandBase;
 import friends.friendcoreplugin.VoteStuff;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,8 +14,7 @@ public class Vote {
         new CommandBase("vote", true) {
             @Override
             public boolean onCommand(CommandSender sender, String [] arguments) {
-                if(sender instanceof Player){
-                    Player player = (Player) sender;
+                if(sender instanceof Player player){
 
                     Inventory inven = VoteStuff.getVoteCenter();
 

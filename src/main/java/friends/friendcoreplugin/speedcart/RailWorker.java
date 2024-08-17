@@ -1,5 +1,7 @@
-package friends.friendcoreplugin;
+package friends.friendcoreplugin.speedcart;
 
+import friends.friendcoreplugin.FriendCorePlugin;
+import friends.friendcoreplugin.utils.Items;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;

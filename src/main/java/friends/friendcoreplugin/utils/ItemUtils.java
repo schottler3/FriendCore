@@ -1,5 +1,7 @@
-package friends.friendcoreplugin;
+package friends.friendcoreplugin.utils;
 
+import friends.friendcoreplugin.tools.CustomTool;
+import friends.friendcoreplugin.tools.Endings;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -15,6 +17,26 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.*;
 
 public class ItemUtils {
+
+    public enum ToolType {
+        PICKAXE,
+        SHOVEL,
+        AXE,
+        SWORD,
+        HOE,
+        NONE
+    }
+
+    public enum LogType {
+        OAK_LOG,
+        DARK_OAK_LOG,
+        BIRCH_LOG,
+        ACACIA_LOG,
+        JUNGLE_LOG,
+        SPRUCE_LOG,
+        CHERRY_LOG,
+        MANGROVE_LOG
+    }
 
     private static final Set<Material> WOODEN_TOOLS = EnumSet.of(Material.WOODEN_PICKAXE, Material.WOODEN_SHOVEL, Material.WOODEN_AXE, Material.WOODEN_HOE, Material.WOODEN_SWORD);
     private static final Set<Material> STONE_TOOLS = EnumSet.of(Material.STONE_PICKAXE, Material.STONE_SHOVEL, Material.STONE_AXE, Material.STONE_HOE, Material.STONE_SWORD);
@@ -53,6 +75,20 @@ public class ItemUtils {
                  GOLDEN_HOE, DIAMOND_HOE, NETHERITE_HOE, WOODEN_SWORD, STONE_SWORD, IRON_SWORD, GOLDEN_SWORD,
                  DIAMOND_SWORD, NETHERITE_SWORD -> true;
             default -> false;
+        };
+    }
+
+    public static LogType getLogType(Material material) {
+        return switch (material) {
+            case OAK_LOG -> LogType.OAK_LOG;
+            case DARK_OAK_LOG -> LogType.DARK_OAK_LOG;
+            case BIRCH_LOG -> LogType.BIRCH_LOG;
+            case ACACIA_LOG -> LogType.ACACIA_LOG;
+            case JUNGLE_LOG -> LogType.JUNGLE_LOG;
+            case SPRUCE_LOG -> LogType.SPRUCE_LOG;
+            case CHERRY_LOG -> LogType.CHERRY_LOG;
+            case MANGROVE_LOG -> LogType.MANGROVE_LOG;
+            default -> null;
         };
     }
 
@@ -184,7 +220,7 @@ public class ItemUtils {
         }
         if(toDeal + damageablePick.getDamage() >= item.getType().getMaxDurability()) {
             killTool(lore, player, type);
-            ItemStack resources = ItemUtils.exchangeTool(item);
+            ItemStack resources = ItemUtils.exchangeTool(item, type);
 
             player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
             player.getInventory().remove(item);
@@ -197,7 +233,6 @@ public class ItemUtils {
         else{
             damageablePick.setDamage(damageablePick.getDamage() + toDeal);
         }
-        Msg.send(player, String.valueOf(toDeal));
 
         data.set(CustomTool.getPowerKey(), PersistentDataType.INTEGER, currentPower);
         item.setItemMeta(meta);
@@ -211,15 +246,21 @@ public class ItemUtils {
         switch (type){
             case 0:
                 Endings.pickaxe(player);
+            case 1:
+                Endings.shovel(player);
         }
 
     }
 
-    public static ItemStack exchangeTool(ItemStack tool){
+    public static ItemStack exchangeTool(ItemStack tool, int type){
         if (tool == null)
             return new ItemStack(Material.AIR);
+        int amount = switch (type) {
+            case 0 -> (int) (Math.random() * 3);
+            case 1 -> (int) (Math.random() * 2);
+            default -> 0;
+        };
         Material toolType = tool.getType();
-        int amount = (int) (Math.random() * 3);
         if(amount <= 0)
             return new ItemStack(Material.AIR);
         if(WOODEN_TOOLS.contains(toolType)){
@@ -250,5 +291,27 @@ public class ItemUtils {
             return drops.iterator().next();
         }
         return null;
+    }
+
+    public static ToolType getToolType(ItemStack item) {
+        Material type = item.getType();
+        return switch (type) {
+            case DIAMOND_PICKAXE, NETHERITE_PICKAXE, GOLDEN_PICKAXE, STONE_PICKAXE, WOODEN_PICKAXE, IRON_PICKAXE -> ToolType.PICKAXE;
+            case DIAMOND_SHOVEL, NETHERITE_SHOVEL, GOLDEN_SHOVEL, STONE_SHOVEL, WOODEN_SHOVEL, IRON_SHOVEL -> ToolType.SHOVEL;
+            case DIAMOND_AXE, NETHERITE_AXE, GOLDEN_AXE, STONE_AXE, WOODEN_AXE, IRON_AXE -> ToolType.AXE;
+            case DIAMOND_SWORD, NETHERITE_SWORD, GOLDEN_SWORD, STONE_SWORD, WOODEN_SWORD, IRON_SWORD -> ToolType.SWORD;
+            case DIAMOND_HOE, NETHERITE_HOE, GOLDEN_HOE, STONE_HOE, WOODEN_HOE, IRON_HOE -> ToolType.HOE;
+            default -> ToolType.NONE;
+        };
+    }
+
+    //Doesn't work with Concrete Powder
+    public static boolean isShovelBlock(Block block){
+        return switch (block.getType()) {
+            case DIRT, GRAVEL, SAND, COARSE_DIRT, CLAY, DIRT_PATH, GRASS_BLOCK, FARMLAND, MUD, MUDDY_MANGROVE_ROOTS,
+                 MYCELIUM, PODZOL, RED_SAND, ROOTED_DIRT, SNOW, SNOW_BLOCK, SOUL_SAND, SUSPICIOUS_GRAVEL,
+                 SUSPICIOUS_SAND -> true;
+            default -> false;
+        };
     }
 }

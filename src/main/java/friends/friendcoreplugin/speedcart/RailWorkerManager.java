@@ -1,4 +1,4 @@
-package friends.friendcoreplugin;
+package friends.friendcoreplugin.speedcart;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Villager;

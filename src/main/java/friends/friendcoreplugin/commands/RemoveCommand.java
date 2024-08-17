@@ -1,8 +1,8 @@
 package friends.friendcoreplugin.commands;
 
-import friends.friendcoreplugin.CommandBase;
-import friends.friendcoreplugin.Json;
-import friends.friendcoreplugin.Msg;
+import friends.friendcoreplugin.utils.CommandBase;
+import friends.friendcoreplugin.utils.Json;
+import friends.friendcoreplugin.utils.Msg;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

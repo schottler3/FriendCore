@@ -1,5 +1,7 @@
-package friends.friendcoreplugin;
+package friends.friendcoreplugin.tools;
 
+import friends.friendcoreplugin.FriendCorePlugin;
+import friends.friendcoreplugin.utils.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -28,6 +30,13 @@ public class BlockBreak implements Listener {
         if (data.has(CustomTool.getTypeKey())) {
             if(data.get(CustomTool.getTypeKey(), PersistentDataType.STRING).equals("Explosive Pick")) {
                 Specials.pickaxe(local,player,item);
+            }
+            else if(data.get(CustomTool.getTypeKey(), PersistentDataType.STRING).equals("Swift Shovel")) {
+                Specials.shovel(event.getBlock(),player,item, 0);
+                ItemUtils.damageTool(player, item, 1);
+            }
+            else if(data.get(CustomTool.getTypeKey(), PersistentDataType.STRING).equals("Sharp Axe")) {
+                Specials.axe(event.getBlock(), player, item);
             }
         }
     }

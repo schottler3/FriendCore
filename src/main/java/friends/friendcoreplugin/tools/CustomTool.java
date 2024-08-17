@@ -1,5 +1,6 @@
-package friends.friendcoreplugin;
+package friends.friendcoreplugin.tools;
 
+import friends.friendcoreplugin.FriendCorePlugin;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,7 +12,7 @@ public abstract class CustomTool{
 
     public CustomTool(ItemStack item){
         this.item = item;
-    };
+    }
 
     public ItemStack getItem() {
         return item;
