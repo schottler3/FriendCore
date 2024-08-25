@@ -12,7 +12,7 @@ public class Deaths {
             @Override
             public boolean onCommand(CommandSender sender, String [] arguments) {
                 if(sender instanceof Player player){
-                    player.openInventory(DeathsUtils.populateInven());
+                    player.openInventory(DeathsUtils.getDeaths());
                 }
                 return true;
             }
