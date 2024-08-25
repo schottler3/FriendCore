@@ -8,6 +8,7 @@ import friends.friendcoreplugin.speedcart.NPCInteract;
 import friends.friendcoreplugin.speedcart.VillagerIntercept;
 import friends.friendcoreplugin.tools.AnvilIntercept;
 import friends.friendcoreplugin.tools.BlockBreak;
+import friends.friendcoreplugin.tools.EntityDamage;
 import friends.friendcoreplugin.utils.CommandList;
 import friends.friendcoreplugin.utils.Msg;
 import friends.friendcoreplugin.utils.VoteUtils;
@@ -37,6 +38,7 @@ public final class FriendCorePlugin extends JavaPlugin {
         new VoteUtils();
         new Elevator();
         new CommandList();
+        new EntityDamage();
         new AnvilIntercept();
         new BlockBreak();
 

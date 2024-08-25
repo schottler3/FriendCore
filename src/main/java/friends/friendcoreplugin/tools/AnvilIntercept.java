@@ -3,6 +3,7 @@ package friends.friendcoreplugin.tools;
 import friends.friendcoreplugin.FriendCorePlugin;
 import friends.friendcoreplugin.commands.utils.ItemUtils;
 import friends.friendcoreplugin.tools.types.ExplosivePick;
+import friends.friendcoreplugin.tools.types.LightingSword;
 import friends.friendcoreplugin.tools.types.SharpAxe;
 import friends.friendcoreplugin.tools.types.SwiftShovel;
 import org.bukkit.Bukkit;
@@ -58,6 +59,16 @@ public class AnvilIntercept implements Listener {
                 ItemStack clonedItem = item.clone();
                 SharpAxe axe = new SharpAxe(clonedItem);
                 ItemStack result = axe.getItem();
+
+                event.setResult(result);
+                anvil.setRepairCost(10);
+            }
+            case SWORD -> {
+                if(!secondItem.equals(new ItemStack(Material.AMETHYST_SHARD, 1))) return;
+
+                ItemStack clonedItem = item.clone();
+                LightingSword sword = new LightingSword(clonedItem);
+                ItemStack result = sword.getItem();
 
                 event.setResult(result);
                 anvil.setRepairCost(10);

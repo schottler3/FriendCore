@@ -7,8 +7,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
 
 public class Specials {
 
@@ -102,5 +105,10 @@ public class Specials {
             }
         }
         */
+    }
+
+    public static void sword(Entity ent,Player player, ItemStack item){
+        Location local = ent.getLocation();
+        Objects.requireNonNull(local.getWorld()).strikeLightning(local);
     }
 }
