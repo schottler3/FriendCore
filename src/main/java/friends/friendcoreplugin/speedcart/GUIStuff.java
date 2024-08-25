@@ -4,6 +4,7 @@ import com.earth2me.essentials.api.Economy;
 import friends.friendcoreplugin.*;
 import friends.friendcoreplugin.utils.Items;
 import friends.friendcoreplugin.utils.Msg;
+import friends.friendcoreplugin.utils.VoteUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -89,7 +90,7 @@ public class GUIStuff implements Listener {
             }
             event.setCancelled(true);
         }
-        else if(Objects.equals(event.getClickedInventory(), VoteStuff.getVoteCenter())){
+        else if(Objects.equals(event.getClickedInventory(), VoteUtils.getVoteCenter())){
             if (event.getClick().equals(ClickType.LEFT)) {
                 Inventory inventory = event.getClickedInventory();
                 assert inventory != null;
@@ -105,38 +106,38 @@ public class GUIStuff implements Listener {
                         NamespacedKey weatherKey = new NamespacedKey(FriendCorePlugin.getInstance(), "weatherVote");
 
                         if (playerData.get(weatherKey, PersistentDataType.BOOLEAN) != null && Boolean.TRUE.equals(playerData.get(weatherKey, PersistentDataType.BOOLEAN))) {
-                            VoteStuff.decrementWeather();
+                            VoteUtils.decrementWeather();
                             playerData.set(weatherKey, PersistentDataType.BOOLEAN, false);
                         } else {
                             playerData.set(weatherKey, PersistentDataType.BOOLEAN, true);
-                            VoteStuff.incrementWeather();
+                            VoteUtils.incrementWeather();
                         }
                     } else if (Objects.equals(data.get(Items.getItemKey(), PersistentDataType.STRING), "normal")) {
                         NamespacedKey normalKey = new NamespacedKey(FriendCorePlugin.getInstance(), "normalVote");
                         if (playerData.get(normalKey, PersistentDataType.BOOLEAN) != null && Boolean.TRUE.equals(playerData.get(normalKey, PersistentDataType.BOOLEAN))) {
-                            VoteStuff.decrementNormal();
+                            VoteUtils.decrementNormal();
                             playerData.set(normalKey, PersistentDataType.BOOLEAN, false);
                         } else {
                             playerData.set(normalKey, PersistentDataType.BOOLEAN, true);
-                            VoteStuff.incrementNormal();
+                            VoteUtils.incrementNormal();
                         }
                     } else if (Objects.equals(data.get(Items.getItemKey(), PersistentDataType.STRING), "hard")) {
                         NamespacedKey hardKey = new NamespacedKey(FriendCorePlugin.getInstance(), "hardVote");
                         if (playerData.get(hardKey, PersistentDataType.BOOLEAN) != null && Boolean.TRUE.equals(playerData.get(hardKey, PersistentDataType.BOOLEAN))) {
-                            VoteStuff.decrementHard();
+                            VoteUtils.decrementHard();
                             playerData.set(hardKey, PersistentDataType.BOOLEAN, false);
                         } else {
                             playerData.set(hardKey, PersistentDataType.BOOLEAN, true);
-                            VoteStuff.incrementHard();
+                            VoteUtils.incrementHard();
                         }
                     } else if (Objects.equals(data.get(Items.getItemKey(), PersistentDataType.STRING), "restart")) {
                         NamespacedKey restartKey = new NamespacedKey(FriendCorePlugin.getInstance(), "restartVote");
                         if (playerData.get(restartKey, PersistentDataType.BOOLEAN) != null && Boolean.TRUE.equals(playerData.get(restartKey, PersistentDataType.BOOLEAN))) {
-                            VoteStuff.decrementRestart();
+                            VoteUtils.decrementRestart();
                             playerData.set(restartKey, PersistentDataType.BOOLEAN, false);
                         } else {
                             playerData.set(restartKey, PersistentDataType.BOOLEAN, true);
-                            VoteStuff.incrementRestart();
+                            VoteUtils.incrementRestart();
                         }
                     }
                 }

@@ -4,7 +4,7 @@ import friends.friendcoreplugin.FriendCorePlugin;
 import friends.friendcoreplugin.tools.types.ExplosivePick;
 import friends.friendcoreplugin.tools.types.SharpAxe;
 import friends.friendcoreplugin.tools.types.SwiftShovel;
-import friends.friendcoreplugin.utils.ItemUtils;
+import friends.friendcoreplugin.commands.utils.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

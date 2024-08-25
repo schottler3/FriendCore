@@ -1,7 +1,8 @@
-package friends.friendcoreplugin.utils;
+package friends.friendcoreplugin.commands.utils;
 
 import friends.friendcoreplugin.tools.CustomTool;
 import friends.friendcoreplugin.tools.Endings;
+import friends.friendcoreplugin.utils.Msg;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;

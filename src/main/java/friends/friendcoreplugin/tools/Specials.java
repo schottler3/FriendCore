@@ -1,6 +1,6 @@
 package friends.friendcoreplugin.tools;
 
-import friends.friendcoreplugin.utils.ItemUtils;
+import friends.friendcoreplugin.commands.utils.ItemUtils;
 import friends.friendcoreplugin.utils.Msg;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

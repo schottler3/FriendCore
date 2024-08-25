@@ -1,7 +1,7 @@
 package friends.friendcoreplugin.tools;
 
 import friends.friendcoreplugin.FriendCorePlugin;
-import friends.friendcoreplugin.utils.ItemUtils;
+import friends.friendcoreplugin.commands.utils.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

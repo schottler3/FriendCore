@@ -1,7 +1,7 @@
 package friends.friendcoreplugin.tools.types;
 
 import friends.friendcoreplugin.tools.CustomTool;
-import friends.friendcoreplugin.utils.ItemUtils;
+import friends.friendcoreplugin.commands.utils.ItemUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;

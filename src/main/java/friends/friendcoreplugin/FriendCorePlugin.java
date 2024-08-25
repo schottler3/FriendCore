@@ -1,9 +1,7 @@
 package friends.friendcoreplugin;
 
-import friends.friendcoreplugin.commands.AddCommand;
-import friends.friendcoreplugin.commands.Commands;
-import friends.friendcoreplugin.commands.RemoveCommand;
-import friends.friendcoreplugin.commands.Vote;
+import friends.friendcoreplugin.commands.*;
+import friends.friendcoreplugin.commands.utils.DeathsUtils;
 import friends.friendcoreplugin.speedcart.CartStuff;
 import friends.friendcoreplugin.speedcart.GUIStuff;
 import friends.friendcoreplugin.speedcart.NPCInteract;
@@ -12,6 +10,7 @@ import friends.friendcoreplugin.tools.AnvilIntercept;
 import friends.friendcoreplugin.tools.BlockBreak;
 import friends.friendcoreplugin.utils.CommandList;
 import friends.friendcoreplugin.utils.Msg;
+import friends.friendcoreplugin.utils.VoteUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,11 +28,13 @@ public final class FriendCorePlugin extends JavaPlugin {
         new VillagerIntercept();
         new RemoveCommand();
         new Commands();
+        new Deaths();
         new Vote();
         new CartStuff();
         new NPCInteract();
         new GUIStuff();
-        new VoteStuff();
+        new DeathsUtils();
+        new VoteUtils();
         new Elevator();
         new CommandList();
         new AnvilIntercept();
