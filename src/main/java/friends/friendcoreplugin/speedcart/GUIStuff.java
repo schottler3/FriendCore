@@ -56,6 +56,7 @@ public class GUIStuff implements Listener {
     public void onInventoryClick(InventoryClickEvent event){
         Player player = (Player)event.getWhoClicked();
         if(event.getInventory().equals(RailWorker.getShop()) ) {
+            if(event.getClickedInventory() == null) return;
             if (event.getClick().equals(ClickType.LEFT)) {
                 Inventory inventory = event.getClickedInventory();
                 assert inventory != null;

@@ -1,14 +1,15 @@
 package friends.friendcoreplugin.tools;
 
 import friends.friendcoreplugin.FriendCorePlugin;
+import friends.friendcoreplugin.commands.utils.ItemUtils;
 import friends.friendcoreplugin.tools.types.ExplosivePick;
 import friends.friendcoreplugin.tools.types.SharpAxe;
 import friends.friendcoreplugin.tools.types.SwiftShovel;
-import friends.friendcoreplugin.commands.utils.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +33,7 @@ public class AnvilIntercept implements Listener {
 
         switch (ItemUtils.getToolType(item)){
             case PICKAXE -> {
-                if(!secondItem.getType().equals(Material.TNT)) return;
+                if(!secondItem.equals(new ItemStack(Material.TNT, 1))) return;
 
                 ItemStack clonedItem = item.clone();
                 ExplosivePick pick = new ExplosivePick(clonedItem);
@@ -42,7 +43,7 @@ public class AnvilIntercept implements Listener {
                 anvil.setRepairCost(10);
             }
             case SHOVEL -> {
-                if(!secondItem.getType().equals(Material.HONEYCOMB)) return;
+                if(!secondItem.equals(new ItemStack(Material.HONEYCOMB, 1))) return;
 
                 ItemStack clonedItem = item.clone();
                 SwiftShovel shovel = new SwiftShovel(clonedItem);
@@ -52,7 +53,7 @@ public class AnvilIntercept implements Listener {
                 anvil.setRepairCost(10);
             }
             case AXE -> {
-                if(!secondItem.getType().equals(Material.DIAMOND)) return;
+                if(!secondItem.equals(new ItemStack(Material.DIAMOND, 1))) return;
 
                 ItemStack clonedItem = item.clone();
                 SharpAxe axe = new SharpAxe(clonedItem);
@@ -62,5 +63,10 @@ public class AnvilIntercept implements Listener {
                 anvil.setRepairCost(10);
             }
         }
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+
     }
 }

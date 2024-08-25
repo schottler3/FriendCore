@@ -23,6 +23,9 @@ public class Specials {
             for (int y = -1; y <= 1; y++) {
                 for (int z = -1; z <= 1; z++) {
                     Block block = center.getWorld().getBlockAt(centerX + x, centerY + y, centerZ + z);
+                    if(block.getType().equals(Material.AIR)) {
+                        continue;
+                    }
                     if(block.getBreakSpeed(player) < .03) {
                         tooMany++;
                         continue;

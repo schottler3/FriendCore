@@ -1,6 +1,7 @@
 package friends.friendcoreplugin.speedcart;
 
 import friends.friendcoreplugin.FriendCorePlugin;
+import friends.friendcoreplugin.utils.Msg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

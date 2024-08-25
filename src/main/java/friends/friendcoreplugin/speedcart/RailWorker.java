@@ -4,13 +4,15 @@ import friends.friendcoreplugin.FriendCorePlugin;
 import friends.friendcoreplugin.utils.Items;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -18,7 +20,8 @@ import java.util.List;
 public class RailWorker {
 
     private Villager villager;
-    private static Inventory shop = null;
+    private static final Inventory shop = setUpRailShop();
+    private static final NamespacedKey key = new NamespacedKey(FriendCorePlugin.getInstance(), "RailWorker");
 
     public RailWorker(Location location, JavaPlugin plugin) {
         World world = location.getWorld();
@@ -32,19 +35,23 @@ public class RailWorker {
         this.villager.setProfession(Villager.Profession.WEAPONSMITH);
         this.villager.setCustomName(ChatColor.DARK_GRAY + "Rail Worker");
         this.villager.setCustomNameVisible(true);
-        this.villager.setMetadata("RailWorker", new FixedMetadataValue(plugin, true));
-        shop = setUpRailShop();
+        PersistentDataContainer data = villager.getPersistentDataContainer();
+        data.set(key, PersistentDataType.BOOLEAN, Boolean.TRUE);
     }
 
     public Villager getVillager() {
         return villager;
     }
 
+    public static NamespacedKey getKey(){
+        return key;
+    }
+
     public static Inventory getShop() {
         return shop;
     }
 
-    private Inventory setUpRailShop() {
+    private static Inventory setUpRailShop() {
         Inventory railShop = GUIStuff.getGUI(27, "Rail Worker's Store");
         ItemStack item = Items.getCartToken();
         ItemMeta meta = item.getItemMeta();
