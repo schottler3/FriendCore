@@ -1,16 +1,9 @@
 package friends.friendcoreplugin;
 
 import friends.friendcoreplugin.commands.*;
-import friends.friendcoreplugin.commands.utils.DeathsUtils;
-import friends.friendcoreplugin.speedcart.CartStuff;
-import friends.friendcoreplugin.speedcart.GUIStuff;
-import friends.friendcoreplugin.speedcart.NPCInteract;
-import friends.friendcoreplugin.speedcart.VillagerIntercept;
-import friends.friendcoreplugin.tools.AnvilIntercept;
-import friends.friendcoreplugin.tools.BlockBreak;
-import friends.friendcoreplugin.tools.EntityDamage;
 import friends.friendcoreplugin.utils.CommandList;
 import friends.friendcoreplugin.utils.Msg;
+import friends.friendcoreplugin.utils.GUIStuff;
 import friends.friendcoreplugin.utils.VoteUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -26,21 +19,14 @@ public final class FriendCorePlugin extends JavaPlugin {
         instance = this;
         // Plugin startup logic
         new AddCommand();
-        new VillagerIntercept();
         new RemoveCommand();
         new Commands();
-        new Deaths();
-        new Vote();
-        new CartStuff();
-        new NPCInteract();
+        new VoteUtils();
         new GUIStuff();
-        new DeathsUtils();
+        new Vote();
         new VoteUtils();
         new Elevator();
         new CommandList();
-        new EntityDamage();
-        new AnvilIntercept();
-        new BlockBreak();
 
         sudoBroadcast("FriendCorePlugin enabled");
         

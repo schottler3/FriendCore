@@ -17,37 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Items {
-
-
     public Items(){}
 
     public static void give(Player player, ItemStack item){
         Location local = player.getLocation();
         local.getWorld().dropItemNaturally(local,item);
-    }
-
-    public static ItemStack getCartToken(){
-        ItemStack item = new ItemStack(Material.PAPER);
-
-        ItemMeta meta = item.getItemMeta();
-        assert meta != null;
-        meta.addEnchant(Enchantment.EFFICIENCY, 5, true);
-        List<String> lore = meta.getLore();
-        if (lore == null) {
-            lore = new ArrayList<>();
-        }
-        else {
-            lore.clear();
-        }
-        lore.add("§2Left Click to Use");
-        PersistentDataContainer data = meta.getPersistentDataContainer();
-        data.set(getItemKey(), PersistentDataType.STRING, "token");
-        meta.setLore(lore);
-        meta.setDisplayName(ChatColor.RESET + "Minecart Speed");
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        item.setItemMeta(meta);
-
-        return item;
     }
 
     public static NamespacedKey getItemKey(){

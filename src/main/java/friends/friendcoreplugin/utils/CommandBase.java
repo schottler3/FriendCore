@@ -22,10 +22,6 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
     private final int maxArguments;
     private final boolean playerOnly;
 
-    public CommandBase(String command){
-        this(command,0);
-    }
-
     public CommandBase(String command, boolean playerOnly){
         this(command,0, playerOnly);
     }
@@ -51,9 +47,9 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
 
         CommandMap commandMap = getCommandMap();
         if(commandMap != null){
-            commandMap.register(command, this);
+            // Modified line - add your plugin name as prefix
+            commandMap.register("friendcore", this);
         }
-
     }
 
     public CommandMap getCommandMap(){

@@ -1,9 +1,9 @@
-package friends.friendcoreplugin.speedcart;
+package friends.friendcoreplugin.utils;
 
 import com.earth2me.essentials.api.Economy;
 import friends.friendcoreplugin.*;
-import friends.friendcoreplugin.utils.Items;
 import friends.friendcoreplugin.utils.Msg;
+import friends.friendcoreplugin.utils.Items;
 import friends.friendcoreplugin.utils.VoteUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -55,43 +55,7 @@ public class GUIStuff implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event){
         Player player = (Player)event.getWhoClicked();
-        if(event.getInventory().equals(RailWorker.getShop()) ) {
-            if(event.getClickedInventory() == null) return;
-            if (event.getClick().equals(ClickType.LEFT)) {
-                Inventory inventory = event.getClickedInventory();
-                assert inventory != null;
-                ItemStack item = inventory.getContents()[event.getSlot()];
-
-                if(item != null) {
-                    ItemMeta meta = item.getItemMeta();
-                    if(meta == null) return;
-                    PersistentDataContainer data = meta.getPersistentDataContainer();
-                    PersistentDataContainer playerData = player.getPersistentDataContainer();
-
-                    if(data.get(Items.getItemKey(), PersistentDataType.STRING) != null) {
-                        if (Objects.equals(data.get(Items.getItemKey(), PersistentDataType.STRING), "token")) {
-                            try {
-                                double bal = Double.parseDouble(Economy.getMoneyExact(player.getName()).toString());
-                                if (bal >= CartStuff.getCartCost()) {
-                                    CartStuff.buyMinecart(player);
-                                    Economy.subtract(player.getName(), CartStuff.getCartCost());
-                                    Msg.send(player, "&c" + CartStuff.getCartCost());
-                                    Msg.send(player, "&aSpeed Cart purchased.");
-                                } else {
-                                    Msg.send(player, "&cYou can't afford that!");
-                                }
-
-                            } catch (Exception e) {
-                                event.setCancelled(true);
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-            event.setCancelled(true);
-        }
-        else if(Objects.equals(event.getClickedInventory(), VoteUtils.getVoteCenter())){
+        if(Objects.equals(event.getClickedInventory(), VoteUtils.getVoteCenter())){
             if (event.getClick().equals(ClickType.LEFT)) {
                 Inventory inventory = event.getClickedInventory();
                 assert inventory != null;
