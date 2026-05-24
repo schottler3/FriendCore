@@ -23,17 +23,18 @@ public class DeathsUtils implements Listener {
 
     public static void populateInven(){
         inven.clear();
-        int players = Bukkit.getWhitelistedPlayers().size();
-        if(players >= 1){
-            List<Tuple<OfflinePlayer, Integer>> deaths = new ArrayList<>();
-            for(OfflinePlayer p : Bukkit.getWhitelistedPlayers()){
-                deaths.add(new Tuple<>(p, p.getStatistic (Statistic.DEATHS)));
-            }
-            deaths.sort(Comparator.comparing((Tuple<OfflinePlayer, Integer> tuple) -> tuple.y).reversed());
-            for(Tuple<OfflinePlayer, Integer> death : deaths){
-                inven.addItem(createSkullItem(death.x, death.y));
-            }
+
+        List<Tuple<OfflinePlayer, Integer>> deaths = new ArrayList<>();
+        for(OfflinePlayer p : Bukkit.getOfflinePlayers()){
+            deaths.add(new Tuple<>(p, p.getStatistic (Statistic.DEATHS)));
         }
+
+        deaths.sort(Comparator.comparing((Tuple<OfflinePlayer, Integer> tuple) -> tuple.y).reversed());
+
+        for(Tuple<OfflinePlayer, Integer> death : deaths){
+            inven.addItem(createSkullItem(death.x, death.y));
+        }
+
     }
 
     public static Inventory getDeaths(){

@@ -51,7 +51,7 @@ public abstract class CommandBase extends BukkitCommand implements CommandExecut
 
         CommandMap commandMap = getCommandMap();
         if(commandMap != null){
-            commandMap.register(command, this);
+            FriendCorePlugin.getInstance().getCommand(command).setExecutor(this);
         }
 
     }

@@ -1,7 +1,6 @@
 package friends.friendcoreplugin.utils;
 
 import friends.friendcoreplugin.FriendCorePlugin;
-import friends.friendcoreplugin.speedcart.GUIStuff;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.NamespacedKey;
@@ -28,7 +27,7 @@ public class VoteUtils implements Listener {
     private static FriendCorePlugin instance;
 
     public VoteUtils(){
-        server =  FriendCorePlugin.getInstance().getServer();
+        server = FriendCorePlugin.getInstance().getServer();
         instance = FriendCorePlugin.getInstance();
         Bukkit.getPluginManager().registerEvents(this, FriendCorePlugin.getInstance());
         setupVoteCenter();

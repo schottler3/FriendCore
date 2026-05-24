@@ -1,6 +1,7 @@
 package friends.friendcoreplugin.utils;
 
 import com.google.gson.*;
+import friends.friendcoreplugin.FriendCorePlugin;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
@@ -10,11 +11,18 @@ import java.io.IOException;
 
 public class Json {
 
-    public static JsonArray getJsonArray(CommandSender sender, String filename){
+    private static File getFile(String filename) {
+        File dataFolder = FriendCorePlugin.getInstance().getDataFolder();
+        dataFolder.mkdirs();
+        return new File(dataFolder, filename + ".json");
+    }
 
-        filename = filename + ".json";
+    public static JsonArray getJsonArray(CommandSender sender, String filename) {
+        File file = getFile(filename);
 
-        try (FileReader reader = new FileReader(filename)) {
+        if (!file.exists()) return null;
+
+        try (FileReader reader = new FileReader(file)) {
             Gson gson = new Gson();
             return gson.fromJson(reader, JsonArray.class);
         } catch (IOException e) {
@@ -25,11 +33,12 @@ public class Json {
         return null;
     }
 
-    public static boolean addJsonData(CommandSender sender, String filename, String field, String data){
+    public static boolean addJsonData(CommandSender sender, String filename, String field, String data) {
+        File file = getFile(filename);
+
         try {
-            File file = new File(filename + ".json");
             if (!file.exists()) {
-                if(file.createNewFile()){
+                if (file.createNewFile()) {
                     Msg.send(sender, "&aFile Created: " + filename + ".json");
                 }
             }
@@ -37,7 +46,7 @@ public class Json {
             Gson gson = new Gson();
             JsonArray jsonArray = getJsonArray(sender, filename);
 
-            if(jsonArray == null){
+            if (jsonArray == null) {
                 jsonArray = new JsonArray();
             }
 
@@ -57,26 +66,28 @@ public class Json {
         }
     }
 
-    public static boolean removeJsonData(CommandSender sender, String filename, String field){
+    public static boolean removeJsonData(CommandSender sender, String filename, String field) {
+        File file = getFile(filename);
+
+        if (!file.exists()) {
+            Msg.send(sender, "&cFile not found. Error: " + filename + ".json");
+            return false;
+        }
+
+        Gson gson = new Gson();
+        JsonArray jsonArray = getJsonArray(sender, filename);
+
+        if (jsonArray == null) {
+            Msg.send(sender, "&cFile is empty or corrupted: " + filename + ".json");
+            return false;
+        }
+
         try {
-            File file = new File(filename + ".json");
-            if (!file.exists()) {
-                Msg.send(sender, "&cFile not found. Error: " + filename + ".json");
-                return true;
-            }
-
-            Gson gson = new Gson();
-            JsonArray jsonArray = getJsonArray(sender, filename);
-
-            if(jsonArray == null){
-                Msg.send(sender, "&cFile not found. Error: " + filename + ".json");
-                return true;
-            }
-
-            for(int i = 0; i < jsonArray.size(); i++){
+            for (int i = 0; i < jsonArray.size(); i++) {
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
                 if (jsonObject.has(field)) {
                     jsonArray.remove(i);
+                    break;
                 }
             }
 

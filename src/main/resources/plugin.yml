@@ -4,3 +4,22 @@ main: friends.friendcoreplugin.FriendCorePlugin
 api-version: '1.21.1'
 authors: [schottler3]
 description: Core functionality of Friends Server
+
+commands:
+  addCommand:
+    description: Adds a command to the commands list
+    usage: /addCommand <command> <description>
+    permission: friendcoreplugin.op
+  removeCommand:
+    description: Removes a command from the commands list
+    usage: /removeCommand <command>
+    permission: friendcoreplugin.op
+  commands:
+    description: Lists all available commands
+    usage: /commands
+  deaths:
+    description: Opens the deaths inventory
+    usage: /deaths
+  vote:
+    description: Opens the vote center
+    usage: /vote
